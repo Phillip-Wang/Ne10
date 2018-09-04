@@ -34,6 +34,12 @@
 #ifndef NE10_MATH_H
 #define NE10_MATH_H
 
+#ifdef __aarch64__
+#define NE10_ASM_FUNC(NAME)
+#else
+#define NE10_ASM_FUNC(NAME) asm(NAME)
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -60,7 +66,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_addc_float using plain C code. */
     extern ne10_result_t ne10_addc_float_c (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_addc_float using NEON intrinsics. */
-    extern ne10_result_t ne10_addc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count) asm ("ne10_addc_float_neon");
+    extern ne10_result_t ne10_addc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_addc_float_neon");
     /** Specific implementation of @ref ne10_addc_float using NEON assembly. */
     extern ne10_result_t ne10_addc_float_asm (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
 
@@ -78,7 +84,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_addc_vec2f using plain C code. */
     extern ne10_result_t ne10_addc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_addc_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_addc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count) asm ("ne10_addc_vec2f_neon");
+    extern ne10_result_t ne10_addc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_addc_vec2f_neon");
     /** Specific implementation of @ref ne10_addc_vec2f using NEON assembly. */
     extern ne10_result_t ne10_addc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
 
@@ -96,7 +102,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_addc_vec3f using plain C code. */
     extern ne10_result_t ne10_addc_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_addc_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_addc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count) asm ("ne10_addc_vec3f_neon");
+    extern ne10_result_t ne10_addc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_addc_vec3f_neon");
     /** Specific implementation of @ref ne10_addc_vec3f using NEON assembly. */
     extern ne10_result_t ne10_addc_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
 
@@ -114,7 +120,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_addc_vec4f using plain C code. */
     extern ne10_result_t ne10_addc_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_addc_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_addc_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count) asm ("ne10_addc_vec4f_neon");
+    extern ne10_result_t ne10_addc_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_addc_vec4f_neon");
     /** Specific implementation of @ref ne10_addc_vec4f using NEON assembly. */
     extern ne10_result_t ne10_addc_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
@@ -132,7 +138,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_add_float using plain C code. */
     extern ne10_result_t ne10_add_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_add_float using NEON intrinsics. */
-    extern ne10_result_t ne10_add_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_add_float_neon");
+    extern ne10_result_t ne10_add_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_add_float_neon");
     /** Specific implementation of @ref ne10_add_float using NEON assembly. */
     extern ne10_result_t ne10_add_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 
@@ -150,7 +156,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_add_vec2f using plain C code. */
     extern ne10_result_t ne10_add_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_add_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_add_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_add_vec2f_neon");
+    extern ne10_result_t ne10_add_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_add_vec2f_neon");
     /** Specific implementation of @ref ne10_add_vec2f using NEON assembly. */
     extern ne10_result_t ne10_add_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 
@@ -168,7 +174,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_add_vec3f using plain C code. */
     extern ne10_result_t ne10_add_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_add_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_add_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_add_vec3f_neon");
+    extern ne10_result_t ne10_add_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_add_vec3f_neon");
     /** Specific implementation of @ref ne10_add_vec3f using NEON assembly. */
     extern ne10_result_t ne10_add_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
@@ -186,7 +192,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_add_vec4f using plain C code. */
     extern ne10_result_t ne10_add_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_add_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_add_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_add_vec4f_neon");
+    extern ne10_result_t ne10_add_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_add_vec4f_neon");
     /** Specific implementation of @ref ne10_add_vec4f using NEON assembly. */
     extern ne10_result_t ne10_add_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */
@@ -351,7 +357,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_sub_float using plain C code. */
     extern ne10_result_t ne10_sub_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_sub_float using NEON intrinsics. */
-    extern ne10_result_t ne10_sub_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_sub_float_neon");
+    extern ne10_result_t ne10_sub_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_sub_float_neon");
     /** Specific implementation of @ref ne10_sub_float using NEON assembly. */
     extern ne10_result_t ne10_sub_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 
@@ -369,7 +375,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_sub_vec2f using plain C code. */
     extern ne10_result_t ne10_sub_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_sub_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_sub_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec2f_neon");
+    extern ne10_result_t ne10_sub_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_sub_vec2f_neon");
     /** Specific implementation of @ref ne10_sub_vec2f using NEON assembly. */
     extern ne10_result_t ne10_sub_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 
@@ -387,7 +393,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_sub_vec3f using plain C code. */
     extern ne10_result_t ne10_sub_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_sub_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_sub_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec3f_neon");
+    extern ne10_result_t ne10_sub_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_sub_vec3f_neon");
     /** Specific implementation of @ref ne10_sub_vec3f using NEON assembly. */
     extern ne10_result_t ne10_sub_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
@@ -405,7 +411,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_sub_vec4f using plain C code. */
     extern ne10_result_t ne10_sub_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_sub_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_sub_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec4f_neon");
+    extern ne10_result_t ne10_sub_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_sub_vec4f_neon");
     /** Specific implementation of @ref ne10_sub_vec4f using NEON assembly. */
     extern ne10_result_t ne10_sub_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */
@@ -651,7 +657,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_mul_float using plain C code. */
     extern ne10_result_t ne10_mul_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_mul_float using NEON intrinsics. */
-    extern ne10_result_t ne10_mul_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_mul_float_neon");
+    extern ne10_result_t ne10_mul_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_mul_float_neon");
     /** Specific implementation of @ref ne10_mul_float using NEON assembly. */
     extern ne10_result_t ne10_mul_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 
@@ -669,7 +675,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vmul_vec2f using plain C code. */
     extern ne10_result_t ne10_vmul_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vmul_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_vmul_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vmul_vec2f_neon");
+    extern ne10_result_t ne10_vmul_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vmul_vec2f_neon");
     /** Specific implementation of @ref ne10_vmul_vec2f using NEON assembly. */
     extern ne10_result_t ne10_vmul_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 
@@ -687,7 +693,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vmul_vec3f using plain C code. */
     extern ne10_result_t ne10_vmul_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vmul_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_vmul_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vmul_vec3f_neon");
+    extern ne10_result_t ne10_vmul_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vmul_vec3f_neon");
     /** Specific implementation of @ref ne10_vmul_vec3f using NEON assembly. */
     extern ne10_result_t ne10_vmul_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
@@ -705,7 +711,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vmul_vec4f using plain C code. */
     extern ne10_result_t ne10_vmul_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vmul_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_vmul_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_vmul_vec4f_neon");
+    extern ne10_result_t ne10_vmul_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vmul_vec4f_neon");
     /** Specific implementation of @ref ne10_vmul_vec4f using NEON assembly. */
     extern ne10_result_t ne10_vmul_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */
@@ -815,7 +821,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_mla_float using plain C code. */
     extern ne10_result_t ne10_mla_float_c (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_mla_float using NEON intrinsics. */
-    extern ne10_result_t ne10_mla_float_neon (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_mla_float_neon");
+    extern ne10_result_t ne10_mla_float_neon (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_mla_float_neon");
     /** Specific implementation of @ref ne10_mla_float using NEON assembly. */
     extern ne10_result_t ne10_mla_float_asm (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 
@@ -835,7 +841,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vmla_vec2f using plain C code. */
     extern ne10_result_t ne10_vmla_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vmla_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_vmla_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec2f_neon");
+    extern ne10_result_t ne10_vmla_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vmla_vec2f_neon");
     /** Specific implementation of @ref ne10_vmla_vec2f using NEON assembly. */
     extern ne10_result_t ne10_vmla_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 
@@ -855,7 +861,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vmla_vec3f using plain C code. */
     extern ne10_result_t ne10_vmla_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vmla_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_vmla_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec3f_neon");
+    extern ne10_result_t ne10_vmla_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vmla_vec3f_neon");
     /** Specific implementation of @ref ne10_vmla_vec3f using NEON assembly. */
     extern ne10_result_t ne10_vmla_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
@@ -875,7 +881,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vmla_vec4f using plain C code. */
     extern ne10_result_t ne10_vmla_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vmla_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_vmla_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec4f_neon");
+    extern ne10_result_t ne10_vmla_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vmla_vec4f_neon");
     /** Specific implementation of @ref ne10_vmla_vec4f using NEON assembly. */
     extern ne10_result_t ne10_vmla_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */
@@ -903,7 +909,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_mulmat_4x4f using plain C code. */
     extern ne10_result_t ne10_mulmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_mulmat_4x4f using NEON intrinsics. */
-    extern ne10_result_t ne10_mulmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count) asm ("ne10_mulmat_4x4f_neon");
+    extern ne10_result_t ne10_mulmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_mulmat_4x4f_neon");
     /** Specific implementation of @ref ne10_mulmat_4x4f using NEON assembly. */
     extern ne10_result_t ne10_mulmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
 
@@ -921,7 +927,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_mulmat_3x3f using plain C code. */
     extern ne10_result_t ne10_mulmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_mulmat_3x3f using NEON intrinsics. */
-    extern ne10_result_t ne10_mulmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count) asm ("ne10_mulmat_3x3f_neon");
+    extern ne10_result_t ne10_mulmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_mulmat_3x3f_neon");
     /** Specific implementation of @ref ne10_mulmat_3x3f using NEON assembly. */
     extern ne10_result_t ne10_mulmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
 
@@ -939,7 +945,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_mulmat_2x2f using plain C code. */
     extern ne10_result_t ne10_mulmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_mulmat_2x2f using NEON intrinsics. */
-    extern ne10_result_t ne10_mulmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count) asm ("ne10_mulmat_2x2f_neon");
+    extern ne10_result_t ne10_mulmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_mulmat_2x2f_neon");
     /** Specific implementation of @ref ne10_mulmat_2x2f using NEON assembly. */
     extern ne10_result_t ne10_mulmat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     /** @} */
@@ -968,7 +974,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_mulcmatvec_cm4x4f_v4f using plain C code. */
     extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_c (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_mulcmatvec_cm4x4f_v4f using NEON intrinsics. */
-    extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_neon (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_mulcmatvec_cm4x4f_v4f_neon");
+    extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_neon (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_mulcmatvec_cm4x4f_v4f_neon");
     /** Specific implementation of @ref ne10_mulcmatvec_cm4x4f_v4f using NEON assembly. */
     extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_asm (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
 
@@ -987,7 +993,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_mulcmatvec_cm3x3f_v3f using plain C code. */
     extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_c (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_mulcmatvec_cm3x3f_v3f using NEON intrinsics. */
-    extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_neon (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_mulcmatvec_cm3x3f_v3f_neon");
+    extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_neon (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_mulcmatvec_cm3x3f_v3f_neon");
     /** Specific implementation of @ref ne10_mulcmatvec_cm3x3f_v3f using NEON assembly. */
     extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_asm (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
 
@@ -1006,7 +1012,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_mulcmatvec_cm2x2f_v2f using plain C code. */
     extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_c (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_mulcmatvec_cm2x2f_v2f using NEON intrinsics. */
-    extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_neon (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_mulcmatvec_cm2x2f_v2f_neon");
+    extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_neon (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_mulcmatvec_cm2x2f_v2f_neon");
     /** Specific implementation of @ref ne10_mulcmatvec_cm2x2f_v2f using NEON assembly. */
     extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_asm (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
     /** @} */
@@ -1106,7 +1112,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_div_float using plain C code. */
     extern ne10_result_t ne10_div_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_div_float using NEON intrinsics. */
-    extern ne10_result_t ne10_div_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_div_float_neon");
+    extern ne10_result_t ne10_div_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_div_float_neon");
     /** Specific implementation of @ref ne10_div_float using NEON assembly. */
     extern ne10_result_t ne10_div_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 
@@ -1124,7 +1130,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vdiv_vec2f using plain C code. */
     extern ne10_result_t ne10_vdiv_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vdiv_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_vdiv_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec2f_neon");
+    extern ne10_result_t ne10_vdiv_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vdiv_vec2f_neon");
     /** Specific implementation of @ref ne10_vdiv_vec2f using NEON assembly. */
     extern ne10_result_t ne10_vdiv_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 
@@ -1142,7 +1148,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vdiv_vec3f using plain C code. */
     extern ne10_result_t ne10_vdiv_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vdiv_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_vdiv_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec3f_neon");
+    extern ne10_result_t ne10_vdiv_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vdiv_vec3f_neon");
     /** Specific implementation of @ref ne10_vdiv_vec3f using NEON assembly. */
     extern ne10_result_t ne10_vdiv_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
@@ -1160,7 +1166,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_vdiv_vec4f using plain C code. */
     extern ne10_result_t ne10_vdiv_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_vdiv_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_vdiv_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec4f_neon");
+    extern ne10_result_t ne10_vdiv_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_vdiv_vec4f_neon");
     /** Specific implementation of @ref ne10_vdiv_vec4f using NEON assembly. */
     extern ne10_result_t ne10_vdiv_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */
@@ -1189,7 +1195,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_divmat_4x4f using plain C code. */
     extern ne10_result_t ne10_divmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_divmat_4x4f using NEON intrinsics. */
-    extern ne10_result_t ne10_divmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_4x4f_neon");
+    extern ne10_result_t ne10_divmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_divmat_4x4f_neon");
     /** Specific implementation of @ref ne10_divmat_4x4f using NEON assembly. */
     extern ne10_result_t ne10_divmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
 
@@ -1207,7 +1213,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_divmat_3x3f using plain C code. */
     extern ne10_result_t ne10_divmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_divmat_3x3f using NEON intrinsics. */
-    extern ne10_result_t ne10_divmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_3x3f_neon");
+    extern ne10_result_t ne10_divmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_divmat_3x3f_neon");
     /** Specific implementation of @ref ne10_divmat_3x3f using NEON assembly. */
     extern ne10_result_t ne10_divmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
 
@@ -1225,7 +1231,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_divmat_2x2f using plain C code. */
     extern ne10_result_t ne10_divmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_divmat_2x2f using NEON intrinsics. */
-    extern ne10_result_t ne10_divmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_2x2f_neon");
+    extern ne10_result_t ne10_divmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_divmat_2x2f_neon");
     /** Specific implementation of @ref ne10_divmat_2x2f using NEON assembly. */
     extern ne10_result_t ne10_divmat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     /** @}
@@ -1328,7 +1334,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_len_vec2f using plain C code. */
     extern ne10_result_t ne10_len_vec2f_c (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_len_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_len_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_len_vec2f_neon");
+    extern ne10_result_t ne10_len_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_len_vec2f_neon");
     /** Specific implementation of @ref ne10_len_vec2f using NEON assembly. */
     extern ne10_result_t ne10_len_vec2f_asm (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
 
@@ -1345,7 +1351,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_len_vec3f using plain C code. */
     extern ne10_result_t ne10_len_vec3f_c (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_len_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_len_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_len_vec3f_neon");
+    extern ne10_result_t ne10_len_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_len_vec3f_neon");
     /** Specific implementation of @ref ne10_len_vec3f using NEON assembly. */
     extern ne10_result_t ne10_len_vec3f_asm (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
 
@@ -1362,7 +1368,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_len_vec4f using plain C code. */
     extern ne10_result_t ne10_len_vec4f_c (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_len_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_len_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_len_vec4f_neon");
+    extern ne10_result_t ne10_len_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_len_vec4f_neon");
     /** Specific implementation of @ref ne10_len_vec4f using NEON assembly. */
     extern ne10_result_t ne10_len_vec4f_asm (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** @} */
@@ -1390,7 +1396,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_normalize_vec2f using plain C code. */
     extern ne10_result_t ne10_normalize_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_normalize_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_normalize_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_normalize_vec2f_neon");
+    extern ne10_result_t ne10_normalize_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_normalize_vec2f_neon");
     /** Specific implementation of @ref ne10_normalize_vec2f using NEON assembly. */
     extern ne10_result_t ne10_normalize_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
 
@@ -1407,7 +1413,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_normalize_vec3f using plain C code. */
     extern ne10_result_t ne10_normalize_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_normalize_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_normalize_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_normalize_vec3f_neon");
+    extern ne10_result_t ne10_normalize_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_normalize_vec3f_neon");
     /** Specific implementation of @ref ne10_normalize_vec3f using NEON assembly. */
     extern ne10_result_t ne10_normalize_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
 
@@ -1424,7 +1430,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_normalize_vec4f using plain C code. */
     extern ne10_result_t ne10_normalize_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_normalize_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_normalize_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_normalize_vec4f_neon");
+    extern ne10_result_t ne10_normalize_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_normalize_vec4f_neon");
     /** Specific implementation of @ref ne10_normalize_vec4f using NEON assembly. */
     extern ne10_result_t ne10_normalize_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** @} */
@@ -1452,7 +1458,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_abs_float using plain C code. */
     extern ne10_result_t ne10_abs_float_c (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_abs_float using NEON intrinsics. */
-    extern ne10_result_t ne10_abs_float_neon (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count) asm ("ne10_abs_float_neon");
+    extern ne10_result_t ne10_abs_float_neon (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_abs_float_neon");
     /** Specific implementation of @ref ne10_abs_float using NEON assembly. */
     extern ne10_result_t ne10_abs_float_asm (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
 
@@ -1469,7 +1475,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_abs_vec2f using plain C code. */
     extern ne10_result_t ne10_abs_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_abs_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_abs_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec2f_neon");
+    extern ne10_result_t ne10_abs_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_abs_vec2f_neon");
     /** Specific implementation of @ref ne10_abs_vec2f using NEON assembly. */
     extern ne10_result_t ne10_abs_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
 
@@ -1486,7 +1492,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_abs_vec3f using plain C code. */
     extern ne10_result_t ne10_abs_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_abs_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_abs_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec3f_neon");
+    extern ne10_result_t ne10_abs_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_abs_vec3f_neon");
     /** Specific implementation of @ref ne10_abs_vec3f using NEON assembly. */
     extern ne10_result_t ne10_abs_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
 
@@ -1503,7 +1509,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_abs_vec4f using plain C code. */
     extern ne10_result_t ne10_abs_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_abs_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_abs_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec4f_neon");
+    extern ne10_result_t ne10_abs_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_abs_vec4f_neon");
     /** Specific implementation of @ref ne10_abs_vec4f using NEON assembly. */
     extern ne10_result_t ne10_abs_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** @} */
@@ -1531,7 +1537,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_dot_vec2f using plain C code. */
     extern ne10_result_t ne10_dot_vec2f_c (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_dot_vec2f using NEON intrinsics. */
-    extern ne10_result_t ne10_dot_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec2f_neon");
+    extern ne10_result_t ne10_dot_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_dot_vec2f_neon");
     /** Specific implementation of @ref ne10_dot_vec2f using NEON assembly. */
     extern ne10_result_t ne10_dot_vec2f_asm (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 
@@ -1549,7 +1555,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_dot_vec3f using plain C code. */
     extern ne10_result_t ne10_dot_vec3f_c (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_dot_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_dot_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec3f_neon");
+    extern ne10_result_t ne10_dot_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_dot_vec3f_neon");
     /** Specific implementation of @ref ne10_dot_vec3f using NEON assembly. */
     extern ne10_result_t ne10_dot_vec3f_asm (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
@@ -1567,7 +1573,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_dot_vec4f using plain C code. */
     extern ne10_result_t ne10_dot_vec4f_c (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_dot_vec4f using NEON intrinsics. */
-    extern ne10_result_t ne10_dot_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec4f_neon");
+    extern ne10_result_t ne10_dot_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_dot_vec4f_neon");
     /** Specific implementation of @ref ne10_dot_vec4f using NEON assembly. */
     extern ne10_result_t ne10_dot_vec4f_asm (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */
@@ -1596,7 +1602,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_cross_vec3f using plain C code. */
     extern ne10_result_t ne10_cross_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_cross_vec3f using NEON intrinsics. */
-    extern ne10_result_t ne10_cross_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_cross_vec3f_neon");
+    extern ne10_result_t ne10_cross_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_cross_vec3f_neon");
     /** Specific implementation of @ref ne10_cross_vec3f using NEON assembly. */
     extern ne10_result_t ne10_cross_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** @} */
@@ -1623,7 +1629,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_detmat_4x4f using plain C code. */
     extern ne10_result_t ne10_detmat_4x4f_c (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_detmat_4x4f using NEON intrinsics. */
-    extern ne10_result_t ne10_detmat_4x4f_neon (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_detmat_4x4f_neon");
+    extern ne10_result_t ne10_detmat_4x4f_neon (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_detmat_4x4f_neon");
     /** Specific implementation of @ref ne10_detmat_4x4f using NEON assembly. */
     extern ne10_result_t ne10_detmat_4x4f_asm (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
 
@@ -1640,7 +1646,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_detmat_3x3f using plain C code. */
     extern ne10_result_t ne10_detmat_3x3f_c (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_detmat_3x3f using NEON intrinsics. */
-    extern ne10_result_t ne10_detmat_3x3f_neon (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_detmat_3x3f_neon");
+    extern ne10_result_t ne10_detmat_3x3f_neon (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_detmat_3x3f_neon");
     /** Specific implementation of @ref ne10_detmat_3x3f using NEON assembly. */
     extern ne10_result_t ne10_detmat_3x3f_asm (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
 
@@ -1657,7 +1663,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_detmat_2x2f using plain C code. */
     extern ne10_result_t ne10_detmat_2x2f_c (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_detmat_2x2f using NEON intrinsics. */
-    extern ne10_result_t ne10_detmat_2x2f_neon (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) asm ("ne10_detmat_2x2f_neon");
+    extern ne10_result_t ne10_detmat_2x2f_neon (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_detmat_2x2f_neon");
     /** Specific implementation of @ref ne10_detmat_2x2f using NEON assembly. */
     extern ne10_result_t ne10_detmat_2x2f_asm (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** @} */
@@ -1684,7 +1690,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_invmat_4x4f using plain C code. */
     extern ne10_result_t ne10_invmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_invmat_4x4f using NEON intrinsics. */
-    extern ne10_result_t ne10_invmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_invmat_4x4f_neon");
+    extern ne10_result_t ne10_invmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_invmat_4x4f_neon");
     /** Specific implementation of @ref ne10_invmat_4x4f using NEON assembly. */
     extern ne10_result_t ne10_invmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
 
@@ -1701,7 +1707,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_invmat_3x3f using plain C code. */
     extern ne10_result_t ne10_invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_invmat_3x3f using NEON intrinsics. */
-    extern ne10_result_t ne10_invmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_invmat_3x3f_neon");
+    extern ne10_result_t ne10_invmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_invmat_3x3f_neon");
     /** Specific implementation of @ref ne10_invmat_3x3f using NEON assembly. */
     extern ne10_result_t ne10_invmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
 
@@ -1718,7 +1724,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_invmat_2x2f using plain C code. */
     extern ne10_result_t ne10_invmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_invmat_2x2f using NEON intrinsics. */
-    extern ne10_result_t ne10_invmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) asm ("ne10_invmat_2x2f_neon");
+    extern ne10_result_t ne10_invmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_invmat_2x2f_neon");
     /** Specific implementation of @ref ne10_invmat_2x2f using NEON assembly. */
     extern ne10_result_t ne10_invmat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** @} */
@@ -1745,7 +1751,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_transmat_4x4f using plain C code. */
     extern ne10_result_t ne10_transmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_transmat_4x4f using NEON intrinsics. */
-    extern ne10_result_t ne10_transmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_transmat_4x4f_neon");
+    extern ne10_result_t ne10_transmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_transmat_4x4f_neon");
     /** Specific implementation of @ref ne10_transmat_4x4f using NEON assembly. */
     extern ne10_result_t ne10_transmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
 
@@ -1762,7 +1768,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_transmat_3x3f using plain C code. */
     extern ne10_result_t ne10_transmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_transmat_3x3f using NEON intrinsics. */
-    extern ne10_result_t ne10_transmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_transmat_3x3f_neon");
+    extern ne10_result_t ne10_transmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_transmat_3x3f_neon");
     /** Specific implementation of @ref ne10_transmat_3x3f using NEON assembly. */
     extern ne10_result_t ne10_transmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
 
@@ -1779,7 +1785,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_transmat_2x2f using plain C code. */
     extern ne10_result_t ne10_transmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_transmat_2x2f using NEON intrinsics. */
-    extern ne10_result_t ne10_transmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) asm ("ne10_transmat_2x2f_neon");
+    extern ne10_result_t ne10_transmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_transmat_2x2f_neon");
     /** Specific implementation of @ref ne10_transmat_2x2f using NEON assembly. */
     extern ne10_result_t ne10_trans_mat2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** @} */
@@ -1804,7 +1810,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_identitymat_4x4f using plain C code. */
     extern ne10_result_t ne10_identitymat_4x4f_c (ne10_mat4x4f_t * dst, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_identitymat_4x4f using NEON intrinsics. */
-    extern ne10_result_t ne10_identitymat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_uint32_t count) asm ("ne10_identitymat_4x4f_neon");
+    extern ne10_result_t ne10_identitymat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_identitymat_4x4f_neon");
     /** Specific implementation of @ref ne10_identitymat_4x4f using NEON assembly. */
     extern ne10_result_t ne10_identitymat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_uint32_t count);
 
@@ -1819,7 +1825,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_identitymat_3x3f using plain C code. */
     extern ne10_result_t ne10_identitymat_3x3f_c (ne10_mat3x3f_t * dst, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_identitymat_3x3f using NEON intrinsics. */
-    extern ne10_result_t ne10_identitymat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_uint32_t count) asm ("ne10_identitymat_3x3f_neon");
+    extern ne10_result_t ne10_identitymat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_identitymat_3x3f_neon");
     /** Specific implementation of @ref ne10_identitymat_3x3f using NEON assembly. */
     extern ne10_result_t ne10_identitymat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_uint32_t count);
 
@@ -1834,7 +1840,7 @@ extern "C" {
     /** Specific implementation of @ref ne10_identitymat_2x2f using plain C code. */
     extern ne10_result_t ne10_identitymat_2x2f_c (ne10_mat2x2f_t * dst, ne10_uint32_t count);
     /** Specific implementation of @ref ne10_identitymat_2x2f using NEON intrinsics. */
-    extern ne10_result_t ne10_identitymat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_uint32_t count) asm ("ne10_identitymat_2x2f_neon");
+    extern ne10_result_t ne10_identitymat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_uint32_t count) NE10_ASM_FUNC ("ne10_identitymat_2x2f_neon");
     /** Specific implementation of @ref ne10_identitymat_2x2f using NEON assembly. */
     extern ne10_result_t ne10_identity_mat2x2f_asm (ne10_mat2x2f_t * dst, ne10_uint32_t count);
     /** @} */

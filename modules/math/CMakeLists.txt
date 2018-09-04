@@ -74,24 +74,47 @@ if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
   endforeach(intrinsic_file)
 endif()
 
-set(NE10_MATH_NEON_SRCS
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_abs.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_add.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_div.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_len.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_mla.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_mul.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_normalize.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_sub.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_dot.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_cross.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_mulmat.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_mulcmatvec.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_detmat.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_invmat.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_transmat.neon.s
-    ${PROJECT_SOURCE_DIR}/modules/math/NE10_identitymat.neon.s
-)
+if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
+    set(NE10_MATH_NEON_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_abs.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_add.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_div.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_len.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_mla.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_mul.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_normalize.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_sub.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_dot.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_cross.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_mulmat.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_mulcmatvec.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_detmat.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_invmat.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_transmat.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_identitymat.neon.s
+    )
+else()
+    set(NE10_MATH_INTRINSIC_SRCS
+        ${NE10_MATH_INTRINSIC_SRCS}
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_abs.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_add.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_div.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_len.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_mla.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_mul.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_normalize.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_sub.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_dot.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_cross.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_mulmat.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_mulcmatvec.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_detmat.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_invmat.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_transmat.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/math/NE10_identitymat.neon.c
+    )
+
+endif()
 
 if(IOS_PLATFORM)
     convert_gas(NE10_MATH_NEON_SRCS NE10_MATH_IOS_NEON_SRCS)
