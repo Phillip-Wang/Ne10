@@ -67,12 +67,6 @@ set(NE10_MATH_INTRINSIC_SRCS
     ${PROJECT_SOURCE_DIR}/modules/math/NE10_submat.neon.c
 )
 
-# Tell CMake these files need to be compiled with "-mfpu=neon"
-if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
-  foreach(intrinsic_file ${NE10_MATH_INTRINSIC_SRCS})
-    set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-  endforeach(intrinsic_file)
-endif()
 
 if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
     set(NE10_MATH_NEON_SRCS
@@ -114,6 +108,13 @@ else()
         ${PROJECT_SOURCE_DIR}/modules/math/NE10_identitymat.neon.c
     )
 
+endif()
+
+# Tell CMake these files need to be compiled with "-mfpu=neon"
+if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
+foreach(intrinsic_file ${NE10_MATH_INTRINSIC_SRCS})
+    set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
+endforeach(intrinsic_file)
 endif()
 
 if(IOS_PLATFORM)

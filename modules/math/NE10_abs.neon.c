@@ -37,46 +37,107 @@
 
 ne10_result_t ne10_abs_float_neon (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    if (count == 0) return NE10_OK;
+
+    const ne10_uint32_t mask = ~0x7;
+    ne10_uint32_t i = 0;
+    for (; i < (count & mask); i+=8)
     {
-        dst[itr] = fabs (src[itr]);
+        float32x4_t tmp0 = vld1q_f32(src); src += 4;
+        float32x4_t tmp1 = vld1q_f32(src); src += 4;
+        vst1q_f32(dst, vabsq_f32(tmp0)); dst += 4;
+        vst1q_f32(dst, vabsq_f32(tmp1)); dst += 4;
     }
+
+    for (; i < count; i++)
+    {
+        *dst++ = fabs(*src++);
+    }
+
     return NE10_OK;
 }
 
 ne10_result_t ne10_abs_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    if (count == 0) return NE10_OK;
+
+    const ne10_uint32_t mask = ~0x3;
+    ne10_uint32_t i = 0;
+    ne10_float32_t *src_f32 = (ne10_float32_t *)src;
+    ne10_float32_t *dst_f32 = (ne10_float32_t *)dst;
+
+    for (; i < (count & mask); i+=4)
     {
-        dst[ itr ].x = fabs (src[ itr ].x);
-        dst[ itr ].y = fabs (src[ itr ].y);
+        float32x4_t tmp0 = vld1q_f32(src_f32); src_f32 += 4;
+        float32x4_t tmp1 = vld1q_f32(src_f32); src_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp0)); dst_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp1)); dst_f32 += 4;
     }
+
+    for (; i < count; i++)
+    {
+        *dst_f32++ = fabs(*src_f32++);
+        *dst_f32++ = fabs(*src_f32++);
+    }
+
     return NE10_OK;
 }
 
 ne10_result_t ne10_abs_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    if (count == 0) return NE10_OK;
+
+    const ne10_uint32_t mask = ~0x3;
+    ne10_uint32_t i = 0;
+    ne10_float32_t *src_f32 = (ne10_float32_t *)src;
+    ne10_float32_t *dst_f32 = (ne10_float32_t *)dst;
+
+    for (; i < (count & mask); i+=4)
     {
-        dst[ itr ].x = fabs (src[ itr ].x);
-        dst[ itr ].y = fabs (src[ itr ].y);
-        dst[ itr ].z = fabs (src[ itr ].z);
+        float32x4_t tmp0 = vld1q_f32(src_f32); src_f32 += 4;
+        float32x4_t tmp1 = vld1q_f32(src_f32); src_f32 += 4;
+        float32x4_t tmp2 = vld1q_f32(src_f32); src_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp0)); dst_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp1)); dst_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp2)); dst_f32 += 4;
     }
+
+    for (; i < count; i++)
+    {
+        *dst_f32++ = fabs(*src_f32++);
+        *dst_f32++ = fabs(*src_f32++);
+        *dst_f32++ = fabs(*src_f32++);
+    }
+
     return NE10_OK;
 }
 
 ne10_result_t ne10_abs_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    if (count == 0) return NE10_OK;
+
+    const ne10_uint32_t mask = ~0x3;
+    ne10_uint32_t i = 0;
+    ne10_float32_t *src_f32 = (ne10_float32_t *)src;
+    ne10_float32_t *dst_f32 = (ne10_float32_t *)dst;
+
+    for (; i < (count & mask); i+=4)
     {
-        dst[ itr ].x = fabs (src[ itr ].x);
-        dst[ itr ].y = fabs (src[ itr ].y);
-        dst[ itr ].z = fabs (src[ itr ].z);
-        dst[ itr ].w = fabs (src[ itr ].w);
+        float32x4_t tmp0 = vld1q_f32(src_f32); src_f32 += 4;
+        float32x4_t tmp1 = vld1q_f32(src_f32); src_f32 += 4;
+        float32x4_t tmp2 = vld1q_f32(src_f32); src_f32 += 4;
+        float32x4_t tmp3 = vld1q_f32(src_f32); src_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp0)); dst_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp1)); dst_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp2)); dst_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp3)); dst_f32 += 4;
     }
+
+    for (; i < count; i++)
+    {
+        float32x4_t tmp0 = vld1q_f32(src_f32); src_f32 += 4;
+        vst1q_f32(dst_f32, vabsq_f32(tmp0)); dst_f32 += 4;
+    }
+
     return NE10_OK;
 }
