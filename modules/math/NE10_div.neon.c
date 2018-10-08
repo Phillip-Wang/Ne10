@@ -29,53 +29,195 @@
  * NE10 Library : math/NE10_div.neon.c
  */
 
-#include "NE10_types.h"
+#include <assert.h>
+#include <arm_neon.h>
+
+#include "NE10.h"
 #include "macros.h"
 
-#include <assert.h>
-
-ne10_result_t ne10_div_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_div_float_neon(ne10_float32_t *dst, ne10_float32_t *src1, ne10_float32_t *src2, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc1Src2;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    ne10_uint32_t cnt = count >> 4u;
+    while (cnt--)
     {
-        dst[ itr ] = src1[ itr ] / src2[ itr ];
+        float32x4_t a0 = vld1q_f32(src1);
+        src1 += 4;
+        float32x4_t b0 = vld1q_f32(src2);
+        src2 += 4;
+        float32x4_t a1 = vld1q_f32(src1);
+        src1 += 4;
+        float32x4_t b1 = vld1q_f32(src2);
+        src2 += 4;
+        float32x4_t a2 = vld1q_f32(src1);
+        src1 += 4;
+        float32x4_t b2 = vld1q_f32(src2);
+        src2 += 4;
+        float32x4_t a3 = vld1q_f32(src1);
+        src1 += 4;
+        float32x4_t b3 = vld1q_f32(src2);
+        src2 += 4;
+        vst1q_f32(dst, vdivq_f32(a0, b0));
+        dst += 4;
+        vst1q_f32(dst, vdivq_f32(a1, b1));
+        dst += 4;
+        vst1q_f32(dst, vdivq_f32(a2, b2));
+        dst += 4;
+        vst1q_f32(dst, vdivq_f32(a3, b3));
+        dst += 4;
+    }
+    count &= 15u;
+
+    cnt = count >> 2u;
+    while (cnt--)
+    {
+        float32x4_t a0 = vld1q_f32(src1);
+        src1 += 4;
+        float32x4_t b0 = vld1q_f32(src2);
+        src2 += 4;
+        vst1q_f32(dst, vdivq_f32(a0, b0));
+        dst += 4;
+    }
+    count &= 3u;
+
+    // Scalar
+    while (count--)
+    {
+        *dst++ = (*src1++) / (*src2++);
     }
     return NE10_OK;
 }
 
-ne10_result_t ne10_vdiv_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_vdiv_vec2f_neon(ne10_vec2f_t *dst, ne10_vec2f_t *src1, ne10_vec2f_t *src2, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc1Src2;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    ne10_float32_t *dst_f32 = (ne10_float32_t *)dst;
+    ne10_float32_t *src1_f32 = (ne10_float32_t *)src1;
+    ne10_float32_t *src2_f32 = (ne10_float32_t *)src2;
+
+    ne10_uint32_t cnt = count >> 3u;
+    while (cnt--)
     {
-        dst[ itr ].x = src1[ itr ].x / src2[ itr ].x;
-        dst[ itr ].y = src1[ itr ].y / src2[ itr ].y;
+        float32x4_t a0 = vld1q_f32(src1_f32);
+        src1_f32 += 4;
+        float32x4_t a1 = vld1q_f32(src1_f32);
+        src1_f32 += 4;
+        float32x4_t a2 = vld1q_f32(src1_f32);
+        src1_f32 += 4;
+        float32x4_t a3 = vld1q_f32(src1_f32);
+        src1_f32 += 4;
+        float32x4_t b0 = vld1q_f32(src2_f32);
+        src2_f32 += 4;
+        float32x4_t b1 = vld1q_f32(src2_f32);
+        src2_f32 += 4;
+        float32x4_t b2 = vld1q_f32(src2_f32);
+        src2_f32 += 4;
+        float32x4_t b3 = vld1q_f32(src2_f32);
+        src2_f32 += 4;
+        vst1q_f32(dst_f32, vdivq_f32(a0, b0));
+        dst_f32 += 4;
+        vst1q_f32(dst_f32, vdivq_f32(a1, b1));
+        dst_f32 += 4;
+        vst1q_f32(dst_f32, vdivq_f32(a2, b2));
+        dst_f32 += 4;
+        vst1q_f32(dst_f32, vdivq_f32(a3, b3));
+        dst_f32 += 4;
+    }
+    count &= 7u;
+
+    cnt = count >> 1u;
+    while (cnt--)
+    {
+        float32x4_t a0 = vld1q_f32(src1_f32);
+        src1_f32 += 4;
+        float32x4_t b0 = vld1q_f32(src2_f32);
+        src2_f32 += 4;
+        vst1q_f32(dst_f32, vdivq_f32(a0, b0));
+        dst_f32 += 4;
+    }
+
+    if (count & 0x1u)
+    {
+        *dst_f32++ = (*src1_f32++) / (*src2_f32++);
+        *dst_f32++ = (*src1_f32++) / (*src2_f32++);
     }
     return NE10_OK;
 }
 
-ne10_result_t ne10_vdiv_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_vdiv_vec3f_neon(ne10_vec3f_t *dst, ne10_vec3f_t *src1, ne10_vec3f_t *src2, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc1Src2;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    ne10_uint32_t cnt = count >> 2u;
+    while (cnt--)
     {
-        dst[ itr ].x = src1[ itr ].x / src2[ itr ].x;
-        dst[ itr ].y = src1[ itr ].y / src2[ itr ].y;
-        dst[ itr ].z = src1[ itr ].z / src2[ itr ].z;
+        ne10_float32_t *dst_f32 = (ne10_float32_t *)dst;
+        ne10_float32_t *src1_f32 = (ne10_float32_t *)src1;
+        ne10_float32_t *src2_f32 = (ne10_float32_t *)src2;
+
+        float32x4_t a0 = vld1q_f32(src1_f32);
+        src1_f32 += 4;
+        float32x4_t a1 = vld1q_f32(src1_f32);
+        src1_f32 += 4;
+        float32x4_t a2 = vld1q_f32(src1_f32);
+        src1_f32 += 4;
+
+        float32x4_t b0 = vld1q_f32(src2_f32);
+        src2_f32 += 4;
+        float32x4_t b1 = vld1q_f32(src2_f32);
+        src2_f32 += 4;
+        float32x4_t b2 = vld1q_f32(src2_f32);
+        src2_f32 += 4;
+
+        vst1q_f32(dst_f32, vdivq_f32(a0, b0));
+        dst_f32 += 4;
+        vst1q_f32(dst_f32, vdivq_f32(a1, b1));
+        dst_f32 += 4;
+        vst1q_f32(dst_f32, vdivq_f32(a2, b2));
+        dst_f32 += 4;
+
+        dst = (ne10_vec3f_t *)dst_f32;
+        src1 = (ne10_vec3f_t *)src1_f32;
+        src2 = (ne10_vec3f_t *)src2_f32;
+    }
+
+    // Scalar
+    count &= 3u;
+    while (count--)
+    {
+        dst->x = src1->x / src2->x;
+        dst->y = src1->y / src2->y;
+        dst->z = src1->z / src2->z;
+        dst++;
+        src1++;
+        src2++;
     }
     return NE10_OK;
 }
 
-ne10_result_t ne10_vdiv_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_vdiv_vec4f_neon(ne10_vec4f_t *dst, ne10_vec4f_t *src1, ne10_vec4f_t *src2, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc1Src2;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    ne10_uint32_t cnt = count >> 2u;
+    while (cnt--)
     {
-        dst[ itr ].x = src1[ itr ].x / src2[ itr ].x;
-        dst[ itr ].y = src1[ itr ].y / src2[ itr ].y;
-        dst[ itr ].z = src1[ itr ].z / src2[ itr ].z;
-        dst[ itr ].w = src1[ itr ].w / src2[ itr ].w;
+        float32x4_t a0 = vld1q_f32((ne10_float32_t *)src1++);
+        float32x4_t b0 = vld1q_f32((ne10_float32_t *)src2++);
+        float32x4_t a1 = vld1q_f32((ne10_float32_t *)src1++);
+        float32x4_t b1 = vld1q_f32((ne10_float32_t *)src2++);
+        float32x4_t a2 = vld1q_f32((ne10_float32_t *)src1++);
+        float32x4_t b2 = vld1q_f32((ne10_float32_t *)src2++);
+        float32x4_t a3 = vld1q_f32((ne10_float32_t *)src1++);
+        float32x4_t b3 = vld1q_f32((ne10_float32_t *)src2++);
+
+        vst1q_f32((ne10_float32_t *)dst++, vdivq_f32(a0, b0));
+        vst1q_f32((ne10_float32_t *)dst++, vdivq_f32(a1, b1));
+        vst1q_f32((ne10_float32_t *)dst++, vdivq_f32(a2, b2));
+        vst1q_f32((ne10_float32_t *)dst++, vdivq_f32(a3, b3));
+    }
+
+    // Scalar
+    count &= 3u;
+    while (count--)
+    {
+        float32x4_t a0 = vld1q_f32((ne10_float32_t *)src1++);
+        float32x4_t b0 = vld1q_f32((ne10_float32_t *)src2++);
+        vst1q_f32((ne10_float32_t *)dst++, vdivq_f32(a0, b0));
     }
     return NE10_OK;
 }
