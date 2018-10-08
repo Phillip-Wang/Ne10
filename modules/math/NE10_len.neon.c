@@ -29,45 +29,113 @@
  * NE10 Library : math/NE10_len.neon.c
  */
 
-#include "NE10_types.h"
+#include <assert.h>
+#include <arm_neon.h>
+
+#include "NE10.h"
 #include "macros.h"
 
-#include <assert.h>
 
-#include <math.h>
-
-ne10_result_t ne10_len_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count)
+inline float32x4_t ne10_len_util(float32x4_t len2)
 {
-    NE10_CHECKPOINTER_DstSrc;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+// e0 ~= 1.0 / sqrt(len2) ~= 1.0 / len
+float32x4_t e0 = vrsqrteq_f32(len2);
+float32x4_t e1 = vrsqrtsq_f32(e0 * len2, e0) * e0;
+// len ~= 1.0 / len * (len * len) ~= len
+float32x4_t len = e1 * len2;
+
+const float32x4_t d = {0.5, 0.5, 0.5, 0.5};
+len = (len + len2 / len) * d;
+
+#ifdef NE10_MORE_PRECISE_SQRT
+    uint32_t cnt = 3;
+    const uint32x4_t m = {~63u, ~63u, ~63u, ~63u};
+    while (cnt--)
     {
-        dst[ itr ] = sqrt (src[ itr ].x * src[ itr ].x +
-                           src[ itr ].y * src[ itr ].y);
+        float32x4_t l = (len + len2 / len) * d;
+        uint32x4_t diff = vreinterpretq_u32_f32(l) ^ vreinterpretq_u32_f32(len);
+        uint32x4_t mask_diff = diff & m;
+        ne10_uint32_t result = vmaxvq_u32(mask_diff);
+
+        len = l;
+        if (!result)
+        {
+            break;
+        }
+    }
+#endif
+
+return len;
+}
+
+ne10_result_t ne10_len_vec2f_neon(ne10_float32_t *dst, ne10_vec2f_t *src, ne10_uint32_t count)
+{
+    ne10_uint32_t cnt = count >> 2u;
+    while (cnt--)
+    {
+        float32x4x2_t a = vld2q_f32((ne10_float32_t *)src);
+        src += 4;
+        float32x4_t a02 = vmulq_f32(a.val[0], a.val[0]);
+        float32x4_t len2 = vmlaq_f32(a02, a.val[1], a.val[1]);
+
+        vst1q_f32((ne10_float32_t *)dst, ne10_len_util(len2));
+        dst += 4;
+    }
+    count &= 3u;
+    // Scalar
+    while (count--)
+    {
+        *dst++ = sqrt((src->x * src->x) + (src->y * src->y));
+        src++;
     }
     return NE10_OK;
 }
 
-ne10_result_t ne10_len_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_len_vec3f_neon(ne10_float32_t *dst, ne10_vec3f_t *src, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    ne10_uint32_t cnt = count >> 2u;
+    while (cnt--)
     {
-        dst[ itr ] = sqrt (src[ itr ].x * src[ itr ].x +
-                           src[ itr ].y * src[ itr ].y +
-                           src[ itr ].z * src[ itr ].z);
+        float32x4x3_t a = vld3q_f32((ne10_float32_t *)src);
+        src += 4;
+        float32x4_t len2 = vmulq_f32(a.val[0], a.val[0]);
+        len2 = vmlaq_f32(len2, a.val[1], a.val[1]);
+        len2 = vmlaq_f32(len2, a.val[2], a.val[2]);
+
+        vst1q_f32((ne10_float32_t *)dst, ne10_len_util(len2));
+        dst += 4;
+    }
+    count &= 3u;
+    // Scalar
+    while (count--)
+    {
+        *dst++ = sqrt((src->x * src->x) + (src->y * src->y) + (src->z * src->z));
+        src++;
     }
     return NE10_OK;
 }
 
-ne10_result_t ne10_len_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_len_vec4f_neon(ne10_float32_t *dst, ne10_vec4f_t *src, ne10_uint32_t count)
 {
-    NE10_CHECKPOINTER_DstSrc;
-    for ( unsigned int itr = 0; itr < count; itr++ )
+    ne10_uint32_t cnt = count >> 2u;
+    while (cnt--)
     {
-        dst[ itr ] = sqrt (src[ itr ].x * src[ itr ].x +
-                           src[ itr ].y * src[ itr ].y +
-                           src[ itr ].z * src[ itr ].z +
-                           src[ itr ].w * src[ itr ].w);
+        float32x4x4_t a = vld4q_f32((ne10_float32_t *)src);
+        src += 4;
+        float32x4_t len2 = vmulq_f32(a.val[0], a.val[0]);
+        len2 = vmlaq_f32(len2, a.val[1], a.val[1]);
+        len2 = vmlaq_f32(len2, a.val[2], a.val[2]);
+        len2 = vmlaq_f32(len2, a.val[3], a.val[3]);
+
+        vst1q_f32((ne10_float32_t *)dst, ne10_len_util(len2));
+        dst += 4;
+    }
+    count &= 3u;
+    // Scalar
+    while (count--)
+    {
+        *dst++ = sqrt((src->x * src->x) + (src->y * src->y) + (src->z * src->z) + (src->w * src->w));
+        src++;
     }
     return NE10_OK;
 }
